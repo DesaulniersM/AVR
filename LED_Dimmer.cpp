@@ -35,7 +35,7 @@ int main(void)
 	
 	while(1)
 	{
-		//TODO:: Please write your application code
+		//TODO:: Got caught up with interrupts and forgot to remove this delay section.
 		_delay_ms(10);
 		
 		dutyCycle += 10;
@@ -47,28 +47,33 @@ int main(void)
 	}
 }
 
-//ADC Stuff
+//Setup the ADC and start the first conversion
 void initADC(){
-	ADMUX |= (1<<MUX0) | (1<<MUX2) | (1<<REFS0);		//Pin AD5 with VREF connected to AREF
-	ADCSRA |= (1<<ADEN) | (1<<ADIE) | (1<<ADPS0) | (1<<ADPS1) | (1<<ADPS2);
+	ADMUX |= (1<<MUX0) | (1<<MUX2) | (1<<REFS0);		//Pin AD5 with VREF connected to AREF and leave the output register right adjusted.
+	ADCSRA |= (1<<ADEN) | (1<<ADIE) | (1<<ADPS0) | (1<<ADPS1) | (1<<ADPS2);	//Enable adc, interrupt flag, and use a adc clock of clk/128
 	DIDR0 |= (1<<ADC5D);
 	
 	startConversion();
 }
 
 void startConversion(){
-	ADCSRA |= (1<<ADSC);
+	ADCSRA |= (1<<ADSC);	//Start conversion
 }
 
 //PWM Interrupt
 ISR(TIMER0_OVF_vect)
 {
-	//OCR0A = (dutyCycle/100.0)*255;
-	OCR0A = dutyCycle;
+	OCR0A = dutyCycle; //Output compare register 0A
 }
 
 //ADC INTERRUPT
 ISR(ADC_vect){
-	dutyCycle = ADC;			//This is a ten bit value
+	dutyCycle = ADC/4;			//This is a ten bit value 1024/4 = 256
+	
+	//For prototyping purposes:
+	//Motor is 3.7 volts and battery is 9 volts
+	//3.5/9 -> 100/256 - 100 will be our max control saturation
+	int saturation = 100;
+	if (dutyCycle >= saturation) dutyCycle = saturation;
 	startConversion();
 }
