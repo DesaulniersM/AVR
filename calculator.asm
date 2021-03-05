@@ -4,17 +4,19 @@
 ; Created: 2/27/2019 11:14:11 AM
 ; Author : Matthew
 ;
+; This program allows the atmega328p chip to act as a 4-function calculator. My implementation was on an arduino uno board.
+; 
 .cseg
 
 
 ;make first 2 pins outputs
 ldi r16, 0x03
-Out ddrb, r16   ;this is pins 8 and 9 on the uno
+Out ddrb, r16   ;these are pins 8 and 9 on the uno
 
 
 ;make all pins inputs
 ldi r16, 0x00
-out ddrd, r16	;this is pins 0-7 on the uno
+out ddrd, r16	;these are pins 0-7 on the uno
 
 ;synchronizer delay
 nop
@@ -59,9 +61,9 @@ breq division
 cpi r17, 48		;0bxx11xxxx
 breq multiplication
 
-rjmp loop		;if, somehow, none of this options work jumpt back 
+rjmp loop		;if, somehow, none of these options work jump back 
 				;to loop. If You run into trouble with your program
-				;connect an led to this case that wil be set to
+				;connect an led to this case that will be set to
 				;high when the program passes "breq multiply"
 				;without branching
 
