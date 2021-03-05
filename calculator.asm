@@ -1,9 +1,3 @@
-;
-; MicroLab4.asm
-;
-; Created: 2/27/2019 11:14:11 AM
-; Author : Matthew
-;
 ; This program allows the atmega328p chip to act as a 4-function calculator. My implementation was on an arduino uno board.
 ; 
 .cseg
