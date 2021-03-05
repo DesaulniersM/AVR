@@ -5,6 +5,8 @@
 * In my case the data was sent to a laptop over usb and read through PuTTY
  */ 
 
+//You should come back and comment register descriptions and setting more thoroughly
+
 #include <avr/io.h>
 #include <stdlib.h>
 #include <stdint.h>
