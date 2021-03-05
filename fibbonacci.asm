@@ -1,10 +1,5 @@
-;
-; FirstAssembly.asm
-;
-; Created: 1/25/2019 1:09:52 PM
-; Author : Matthew
-;
-; This code will find the first 100 numbers in the fibonacci sequence. After that it will restart from the beginning
+
+; This code will find the first 100 numbers in the fibonacci sequence. After that it will restart from the beginning.
 
 ; Replace with your application code
 start:
